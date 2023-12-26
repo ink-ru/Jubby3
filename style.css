@@ -1,0 +1,42 @@
+html, body {
+		    min-height: 100%;
+		    background-color: DarkKhaki; /* https://htmlcolorcodes.com/color-names/ */
+		    font-size: 2vh;
+		}
+		/*.farame {
+			opacity: .9;
+			filter: saturate(.1);
+			filter: grayscale(.1);
+			filter: sepia(.1);
+			filter: brightness(.95);
+		}*/
+		.flex-container {
+		    min-height: 100vh;
+		    display: flex;
+		    /*align-items: center;*/ /* vertical aligment */
+		    justify-content: center;
+		    flex-direction: column;  /* make main axis vertical */
+		}
+		.row {
+		    width: auto; flex-direction: column;  /* make main axis vertical just because width */
+		}
+		.flex-item {
+		    background-color: MintCream;
+		    padding: 8vh;
+		    width: 80vw;
+		    height: 20vh;
+		    margin: 8vh;
+		    color: DarkSlateGray;
+		    text-align: center;
+		}
+		.item-title
+		{
+			font-weight: bold;
+			font-size: xx-large;
+			line-height: 4em;
+		}
+		.item-descr
+		{
+			font-size: xx-small;
+			color: silver;
+		}
