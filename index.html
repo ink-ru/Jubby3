@@ -8,41 +8,8 @@
 
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" integrity="sha512-NmLkDIU1C/C88wi324HBc+S2kLhi08PN5GDeUVVVC/BVt/9Izdsc9SVeVfA1UZbY3sHUlDSyRXhCzHfr6hmPPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<style>
-		* {
-			opacity: .9;
-			filter: saturate(.1);
-			filter: grayscale(.1);
-			filter: sepia(.1);
-			filter: brightness(.95);
-		}
-		html, body {
-		    min-height: 100%;
-		    background-color: DarkKhaki; /* https://htmlcolorcodes.com/color-names/ */
-		}
-		.flex-container {
-		    min-height: 100vh;
-		    display: flex;
-		    /*align-items: center;*/ /* vertical aligment */
-		    justify-content: center;
-		    flex-direction: column;  /* make main axis vertical */
-		}
-		.row {
-		    width: auto; flex-direction: column;  /* make main axis vertical just because width */
-		}
-		.flex-item {
-		    background-color: tomato;
-		    padding: 8vh;
-		    width: 80vw;
-		    height: 20vh;
-		    margin: 8vh;
-		    line-height: 20vh;
-		    color: white;
-		    font-weight: bold;
-		    font-size: 20vh;
-		    text-align: center;
-		}
-	</style>
+	<!-- <link rel="stylesheet" type="text/css" href="https://raw.githubusercontent.com/ink-ru/Jubby3/main/style.css" crossorigin="anonymous" referrerpolicy="no-referrer"> -->
+	<style id="import_css"></style>
 
 </head>
 <body>
@@ -55,29 +22,56 @@
 	-->
 	<div class="flex-container">
 	    <!-- <div class="row">  -->
-	        <div id="flex-item1" class="flex-item">1</div>
-	        <div class="flex-item">2</div>
-	        <div class="flex-item">3</div>
-	        <div class="flex-item">4</div>
-	        <div class="flex-item">5</div>
-	        <div class="flex-item">6</div>
-	        <div class="flex-item">7</div>
-	        <div class="flex-item">8</div>
+	        <div id="flex-item1" class="flex-item item-container">
+	        	<div class="item-title">1</div>
+	        	<div class="item-descr">description</div>
+	        </div>
+	        <div id="flex-item2" class="flex-item item-container">
+	        	<div class="item-title">2</div>
+	        	<div class="item-descr">description</div>
+	        </div>
+	        <div id="flex-item3" class="flex-item item-container">
+	        	<div class="item-title">3</div>
+	        	<div class="item-descr">description</div>
+	        </div>
+	        <div id="flex-item4" class="flex-item item-container">
+	        	<div class="item-title">4</div>
+	        	<div class="item-descr">description</div>
+	        </div>
+	        <div id="flex-item5" class="flex-item item-container">
+	        	<div class="item-title">5</div>
+	        	<div class="item-descr">description</div>
+	        </div>
+	        <div id="flex-item6" class="flex-item item-container">
+	        	<div class="item-title">6</div>
+	        	<div class="item-descr">description</div>
+	        </div>
+	        <div id="flex-item7" class="flex-item item-container">
+	        	<div class="item-title">7</div>
+	        	<div class="item-descr">description</div>
+	        </div>
+	        <div id="flex-item8" class="flex-item item-container">
+	        	<div class="item-title">8</div>
+	        	<div class="item-descr">description</div>
+	        </div>
 	    <!-- </div> -->
 	</div>
 
 </body>
 	<script type="text/javascript">
 
-$(function() {
+function text_placeholder(selector)
+{
+	var txt = 'Такая потеря собственной сущности превращает конформизацию в императив: человек может быть уверен в себе лишь в том случае, если живет в соответствии с ожиданиями других. Если мы живем не по общепринятому сценарию, то рискуем не только вызвать неодобрение и возросшую изоляцию, но и потерять уверенность в своей сущности, что угрожает психическому здоровью.';
+
+	return $(selector).replaceWith(txt);
+}
 
 // https://stackoverflow.com/questions/123999/how-can-i-tell-if-a-dom-element-is-visible-in-the-current-viewport
 var isOutOfViewport = function (elem)
 	{
 
-    if (typeof jQuery === "function" && elem instanceof jQuery) {
-        elem = elem[0];
-    }
+    if (typeof jQuery === "function" && elem instanceof jQuery) elem = elem[0];
 
 	// Get element's bounding
 	var bounding = elem.getBoundingClientRect();
@@ -98,28 +92,61 @@ var isOutOfViewport = function (elem)
 
 	};
 
-function checkViewport()
+$(function()
 {
 
-	let bItems = document.querySelectorAll(".flex-item");
 
-	bItems.forEach((userItem) => {
-		let is = (isOutOfViewport(userItem).top || isOutOfViewport(userItem).bottom)
-		if (is) console.error( userItem.textContent + ": " + is );
-		else console.info( userItem.textContent + ": " + is );
-  		
-	});
-	console.log("---------------");
-}
+	function checkViewport()
+	{
+		var checkList = {};
+		var checkList_reversed = {};
+
+		// определяем направление скрола (возможно не на каждый пиксель, задержку сделать)
+		const direction = (this.oldScroll > this.scrollY);
+		this.oldScroll = this.scrollY;
+
+		let bItems = document.querySelectorAll(".flex-item");
+
+		// работаем только если количество елементов более 4 (хорошо бы размер на экране проверять еще)
+		if(4 > bItems.length) return false;
+
+		// формируем бинарный массив флагов видимости (да, нет)
+		bItems.forEach((curItem) => {
+			checkList[curItem.id] = (isOutOfViewport(curItem).top || isOutOfViewport(curItem).bottom);
+		});
+
+		/* Не понятно нужна ли сортировка. Пока все сохраняется в линойном порядке. */
+		// const sortObject = o => Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
+		
+		/*Revers относительно направления скролла*/
+		if(direction)
+		{
+			const reversedKeys = Object.keys(checkList).reverse();
+
+			reversedKeys.forEach((key, index) => { checkList_reversed[key] = checkList[key] });
+
+			checkList = checkList_reversed;
+		}
+
+		console.table(checkList);
+		console.log("---------------");
+
+		
+		/*считаем процент невидимых элементов с начала (хвоста)*/
+		/*если болле 25% и более 2, вызываем функцию перемещения*/
+
+		// let up = curItem.prependTo(curItem.parent());
+		// let down = curItem.appendTo(curItem.parent());
+
+	}
 
 
-window.addEventListener('scroll', checkViewport, false);
+	window.addEventListener('scroll', checkViewport, false);
+
+	$( "#import_css" ).load( "https://raw.githubusercontent.com/ink-ru/Jubby3/main/style.css" );
+	text_placeholder('.item-descr');
 
 });
-		
-	
-
-
 
 
 	</script>
