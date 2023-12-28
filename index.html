@@ -100,6 +100,8 @@ $(function()
 	{
 		var checkList = {};
 		var checkList_reversed = {};
+		var count = 0;
+		var stop = false;
 
 		// определяем направление скрола (возможно не на каждый пиксель, задержку сделать)
 		const direction = (this.oldScroll > this.scrollY);
@@ -130,15 +132,29 @@ $(function()
 
 		console.table(checkList);
 		console.log("---------------");
+		
+		/*считаем невидимыt элементы с начала */
+		for (let [key, value] of Object.entries(checkList))
+		{
+		    if(value === true && stop === false) count++;
+		    	else stop = true;
+		}
+
+		/*если болле 25% и более 2, вызываем функцию перемещения*/
+		if(count > 3)
+	    {
+	    	console.info(Object.keys(checkList)[0]);
+
+	    	let target = $('#'+Object.keys(checkList)[0]);
+
+			if(direction) target.prependTo(target.parent()); // up 
+				else target.appendTo(target.parent()); // down
+	    }
 
 		
-		/*считаем процент невидимых элементов с начала (хвоста)*/
-		/*если болле 25% и более 2, вызываем функцию перемещения*/
-
-		// let up = curItem.prependTo(curItem.parent());
-		// let down = curItem.appendTo(curItem.parent());
 
 	}
+
 
 
 	window.addEventListener('scroll', checkViewport, false);
