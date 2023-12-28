@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
 	<title>Jubby</title>
+	<meta charset="utf-8" />
 
 	<!-- https://npmtrends.com/cash-dom-vs-dom7-vs-jquery-vs-yui-vs-zepto -->
-	<script src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.0.min.js" integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+	<!-- <script language="JavaScript" type="text/plain" src="https://raw.githubusercontent.com/ink-ru/Jubby3/main/script.js" crossorigin="anonymous"></script> -->
+	<script language="JavaScript" type="text/javascript" src="script.js"></script>
 
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w==" crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css" integrity="sha512-NmLkDIU1C/C88wi324HBc+S2kLhi08PN5GDeUVVVC/BVt/9Izdsc9SVeVfA1UZbY3sHUlDSyRXhCzHfr6hmPPw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<!-- <link rel="stylesheet" type="text/css" href="https://raw.githubusercontent.com/ink-ru/Jubby3/main/style.css" crossorigin="anonymous" referrerpolicy="no-referrer"> -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="style.css">
 	<style id="import_css"></style>
 
 </head>
@@ -56,114 +62,10 @@
 	        </div>
 	    <!-- </div> -->
 	</div>
+	<footer id="footer"></footer>
 
 </body>
-	<script type="text/javascript">
+<script type="text/javascript">
 
-function text_placeholder(selector)
-{
-	var txt = 'Такая потеря собственной сущности превращает конформизацию в императив: человек может быть уверен в себе лишь в том случае, если живет в соответствии с ожиданиями других. Если мы живем не по общепринятому сценарию, то рискуем не только вызвать неодобрение и возросшую изоляцию, но и потерять уверенность в своей сущности, что угрожает психическому здоровью.';
-
-	return $(selector).replaceWith(txt);
-}
-
-// https://stackoverflow.com/questions/123999/how-can-i-tell-if-a-dom-element-is-visible-in-the-current-viewport
-var isOutOfViewport = function (elem)
-	{
-
-    if (typeof jQuery === "function" && elem instanceof jQuery) elem = elem[0];
-
-	// Get element's bounding
-	var bounding = elem.getBoundingClientRect();
-
-	// Check if it's out of the viewport on each side
-	var out = {};
-
-	out.top = bounding.top < 0-(bounding.height+10);
-	out.bottom = bounding.bottom > (window.innerHeight || document.documentElement.clientHeight)+(bounding.height-10);
-
-	out.left = bounding.left < 0;
-	out.right = bounding.right > (window.innerWidth || document.documentElement.clientWidth);
-	//
-	out.any = out.top || out.left || out.bottom || out.right;
-	out.all = out.top && out.left && out.bottom && out.right;
-
-	return out;
-
-	};
-
-$(function()
-{
-
-
-	function checkViewport()
-	{
-		var checkList = {};
-		var checkList_reversed = {};
-		var count = 0;
-		var stop = false;
-
-		// определяем направление скрола (возможно не на каждый пиксель, задержку сделать)
-		const direction = (this.oldScroll > this.scrollY);
-		this.oldScroll = this.scrollY;
-
-		let bItems = document.querySelectorAll(".flex-item");
-
-		// работаем только если количество елементов более 4 (хорошо бы размер на экране проверять еще)
-		if(4 > bItems.length) return false;
-
-		// формируем бинарный массив флагов видимости (да, нет)
-		bItems.forEach((curItem) => {
-			checkList[curItem.id] = (isOutOfViewport(curItem).top || isOutOfViewport(curItem).bottom);
-		});
-
-		/* Не понятно нужна ли сортировка. Пока все сохраняется в линойном порядке. */
-		// const sortObject = o => Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
-		
-		/*Revers относительно направления скролла*/
-		if(direction)
-		{
-			const reversedKeys = Object.keys(checkList).reverse();
-
-			reversedKeys.forEach((key, index) => { checkList_reversed[key] = checkList[key] });
-
-			checkList = checkList_reversed;
-		}
-
-		console.table(checkList);
-		console.log("---------------");
-		
-		/*считаем невидимыt элементы с начала */
-		for (let [key, value] of Object.entries(checkList))
-		{
-		    if(value === true && stop === false) count++;
-		    	else stop = true;
-		}
-
-		/*если болле 25% и более 2, вызываем функцию перемещения*/
-		if(count > 3)
-	    {
-	    	console.info(Object.keys(checkList)[0]);
-
-	    	let target = $('#'+Object.keys(checkList)[0]);
-
-			if(direction) target.prependTo(target.parent()); // up 
-				else target.appendTo(target.parent()); // down
-	    }
-
-		
-
-	}
-
-
-
-	window.addEventListener('scroll', checkViewport, false);
-
-	$( "#import_css" ).load( "https://raw.githubusercontent.com/ink-ru/Jubby3/main/style.css" );
-	text_placeholder('.item-descr');
-
-});
-
-
-	</script>
+</script>
 </html>
