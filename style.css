@@ -1,42 +1,50 @@
-html, body {
-		    min-height: 100%;
-		    background-color: DarkKhaki; /* https://htmlcolorcodes.com/color-names/ */
-		    font-size: 2vh;
-		}
-		/*.farame {
-			opacity: .9;
-			filter: saturate(.1);
-			filter: grayscale(.1);
-			filter: sepia(.1);
-			filter: brightness(.95);
-		}*/
-		.flex-container {
-		    min-height: 100vh;
-		    display: flex;
-		    /*align-items: center;*/ /* vertical aligment */
-		    justify-content: center;
-		    flex-direction: column;  /* make main axis vertical */
-		}
-		.row {
-		    width: auto; flex-direction: column;  /* make main axis vertical just because width */
-		}
-		.flex-item {
-		    background-color: MintCream;
-		    padding: 8vh;
-		    width: 80vw;
-		    height: 20vh;
-		    margin: 8vh;
-		    color: DarkSlateGray;
-		    text-align: center;
-		}
-		.item-title
-		{
-			font-weight: bold;
-			font-size: xx-large;
-			line-height: 4em;
-		}
-		.item-descr
-		{
-			font-size: xx-small;
-			color: silver;
-		}
+* {
+	box-sizing: border-box;
+}
+html, body
+{
+    min-height: 100%;
+    background-color: cadetblue;
+	margin: 0;
+    padding: 0;
+    font-size:calc(12px + 1vmin);
+    font-family: 'Open Sans';
+}
+
+/* Hide scrollbar */
+body::-webkit-scrollbar {
+  display: none;
+  scrollbar-width: none;
+}
+
+#import_css{visibility: visibility;}
+
+.flex-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center; /* vertical aligment */
+    justify-content: center;
+    flex-direction: column;  /* make main axis vertical */
+}
+
+.flex-item {
+    background-color: MintCream;
+    padding: 8vh;
+    width: 80vw;
+    min-height: calc(100px + 20vh);
+    height: 99vh;
+    margin: .4vh;
+    color: DarkSlateGray;
+    text-align: center;
+}
+.item-title
+{
+  font-weight: bold;
+  font-size: xx-large;
+  line-height: calc(18vh + 1em);
+}
+.item-descr
+{
+/*   font-size: xx-small; */
+  color: silver;
+}
