@@ -5,10 +5,11 @@ html, body
 {
     min-height: 100%;
     background-color: cadetblue;
-	margin: 0;
+    margin: 0;
     padding: 0;
     font-size:calc(12px + 1vmin);
-    font-family: 'Open Sans';
+    font-family: 'Roboto', sans-serif;
+    /*overflow: hidden;*/
 }
 
 /* Hide scrollbar */
@@ -17,7 +18,7 @@ body::-webkit-scrollbar {
   scrollbar-width: none;
 }
 
-#import_css{visibility: visibility;}
+#import_css{visibility: hidden;}
 
 .flex-container {
     min-height: 100vh;
@@ -30,10 +31,10 @@ body::-webkit-scrollbar {
 .flex-item {
     background-color: MintCream;
     padding: 8vh;
-    width: 80vw;
+    width: 94vw;
     min-height: calc(100px + 20vh);
-    height: 99vh;
-    margin: .4vh;
+    height: 99.6vh;
+    margin: 0.2vh;
     color: DarkSlateGray;
     text-align: center;
 }
