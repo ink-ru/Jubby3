@@ -7,7 +7,7 @@ html, body
     background-color: cadetblue;
     margin: 0;
     padding: 0;
-    font-size:calc(12px + 1vmin);
+    font-size:calc(8px + .8vmin);
     font-family: 'Roboto', sans-serif;
     /*overflow: hidden;*/
 }
@@ -48,4 +48,47 @@ body::-webkit-scrollbar {
 {
 /*   font-size: xx-small; */
   color: silver;
+}
+
+#footer.settings-panel
+{
+  overflow: hidden;
+  background-color: #333;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 0 1ex;
+}
+
+/* Links inside the navbar */
+#footer.settings-panel a {
+  color: white;
+  text-decoration: none;
+  padding: 0 1ex;
+}
+
+/* Change background on mouse-over */
+#footer.settings-panel a:hover {
+  background: #ddd;
+  color: black;
+}
+
+#footer.settings-panel fieldset
+{
+  line-height: 2em;
+}
+
+#footer.settings-panel fieldset input,
+#footer.settings-panel fieldset label
+{
+  margin: 1ex;
+  color: white;
+}
+
+.divider {
+  margin: 1ex 0 ;
+  border-left: 2px solid white;
+  height: 100%;
+  width: 1px;
 }

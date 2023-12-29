@@ -98,6 +98,12 @@ function load_css()
 	return true;
 }
 
+function show_me(target = 0, delay=100)
+{
+	if(window.animate) $('html').animate({scrollTop:target}, delay);
+		else $(document).scrollTop(target);
+}
+
 function checkViewport()
 {
 	var checkList = [];
@@ -107,7 +113,6 @@ function checkViewport()
 	var current_slide = false;
 	const slide_height = $(".flex-item").first().outerHeight();
 	const delay = 76;
-	const animate = false;
 
 	this.cur_time = new Date().getTime();
 
@@ -118,7 +123,7 @@ function checkViewport()
 	let bItems = document.querySelectorAll(".flex-item");
 
 	// работаем только если количество елементов более 4 (хорошо бы размер на экране проверять еще)
-	if(4 > bItems.length) return false;
+	if(4 > bItems.length || window.mute) return false;
 
 	// формируем бинарный массив флагов видимости (да, нет)
 	bItems.forEach((curItem) => {
@@ -147,13 +152,14 @@ function checkViewport()
 	}
 
 	  
-    if ((this.cur_time - this.last_time) > delay)
+    if ((this.cur_time - this.last_time) > delay &&
+    	$('input#sticky_scrl').is(':checked'))
     {
     	let correction = direction ? slide_height/80 : slide_height/160
     	let target = direction ? $('#'+current_slide).prev().offset().top-slide_height : $('#'+current_slide).next().offset().top
     	target += correction;
 		
-		if(animate) $('html').animate({scrollTop:target}, delay*1.2);
+		if ($('input#animate_scrl').is(':checked')) $('html').animate({scrollTop:target}, delay*1.2);
 			else $(document).scrollTop(target);
 	}
 	
@@ -181,13 +187,24 @@ function do_all_job()
 	return true;
 }
 
+var mute = false;
+const animate = false;
+
 // Вместо document ready
 $(function()
 {
+	
+	var main_frame = $(".flex-container");
+	var slides = $(".flex-item")
+
 	window.addEventListener('scroll', do_all_job, false);
 	text_placeholder('.item-descr');
 
-	
+	$( ".home_lnk" ).on( "click", function() {
+		window.mute = true;
+		show_me(slides.first().offset().top);
+		window.mute = false;
+	});
 
 	setTimeout(() => {
 		waitForElm('footer#footer').then((elm) => {
