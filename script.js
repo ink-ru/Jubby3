@@ -104,6 +104,12 @@ function checkViewport()
 	var checkList_reversed = [];
 	var count = 0;
 	var stop = false;
+	var current_slide = false;
+	const slide_height = $(".flex-item").first().outerHeight();
+	const delay = 76;
+	const animate = false;
+
+	this.cur_time = new Date().getTime();
 
 	// определяем направление скрола (возможно не на каждый пиксель, задержку сделать)
 	const direction = (this.oldScroll > this.scrollY);
@@ -125,29 +131,32 @@ function checkViewport()
 	/*Revers относительно направления скролла*/
 	if(direction) checkList = revers_list(checkList);
 
-	console.table(checkList);
-	console.log("---------------");
+	// console.table(checkList);
+	// console.log("---------------");
 
+	/* Prevet unwanted shaking in the midle of the slide */
 	if( (Object.keys(checkList).length - Object.values(checkList).filter(Boolean).length) < 2 ) return true;
 
 	/*считаем невидимыt элементы с начала */
-	// if(typeof checkList === 'object' && checkList !== null)
+	for (let [key, value] of Object.entries(checkList))
 	{
-		for (let [key, value] of Object.entries(checkList))
-		{
-		    if(value === true && stop === false) count++;
-		    	else stop = true;
-		}
-	}
-	// else if(Array.isArray(checkList) && checkList !== null)
-	// {
-	// 	for (const list_item of checkList)
-	// 	{
-	// 	    if(list_item === true && stop === false) count++;
-	// 	    	else stop = true;
-	// 	}
-	// }
+	    if(value === true && stop === false) count++;
+	    	else stop = true;
 
+		if(!current_slide && !value) current_slide = key;
+	}
+
+	  
+    if ((this.cur_time - this.last_time) > delay)
+    {
+    	let correction = direction ? slide_height/80 : slide_height/160
+    	let target = direction ? $('#'+current_slide).prev().offset().top-slide_height : $('#'+current_slide).next().offset().top
+    	target += correction;
+		
+		if(animate) $('html').animate({scrollTop:target}, delay*1.2);
+			else $(document).scrollTop(target);
+	}
+	
 
 	/*если болле 25% и более 2, вызываем функцию перемещения*/
 	if(count > 3)
@@ -160,15 +169,25 @@ function checkViewport()
 			else target.appendTo(target.parent()); // down
 	}
 
+    this.last_time = this.cur_time;
 
+    return true;
+}
 
+function do_all_job()
+{
+	checkViewport();
+	
+	return true;
 }
 
 // Вместо document ready
 $(function()
 {
-	window.addEventListener('scroll', checkViewport, false);
+	window.addEventListener('scroll', do_all_job, false);
 	text_placeholder('.item-descr');
+
+	
 
 	setTimeout(() => {
 		waitForElm('footer#footer').then((elm) => {
